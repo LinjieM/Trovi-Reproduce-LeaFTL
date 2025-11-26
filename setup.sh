@@ -6,7 +6,9 @@ sudo apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran
 
 pushd .
 cd ~
-git clone https://github.com/my-HenryS/LeaFTL.git
+if [ ! -e LeaFTL ];then
+    git clone https://github.com/my-HenryS/LeaFTL.git
+fi
 LeaFTL=~/LeaFTL
 cd $LeaFTL
 pushd .
@@ -14,8 +16,10 @@ pushd .
 cd wiscsee/leaftl_scripts
 pip3 install gdown
 export PATH="$HOME/.local/bin:$PATH"
-gdown 13gS89MNWESywUA3ZGycSwYTFjZ29qdGu
-unzip leaftl_traces.zip
+if [ ! -e leaftl_traces ];then 
+    gdown 13gS89MNWESywUA3ZGycSwYTFjZ29qdGu
+    unzip leaftl_traces.zip
+fi
 popd
 
 # Set Env Variables
@@ -23,8 +27,10 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)/wiscsee
 
 # Install Pypy to speedup the experiment running
 # You can run WiscSim 2-3× faster with Pypy. You can install Pypy2 with this guide: https://doc.pypy.org/en/latest/install.html.
-wget https://downloads.python.org/pypy/pypy2.7-v7.3.9-linux64.tar.bz2
-tar xf pypy2.7-v7.3.9-linux64.tar.bz2
+if [ ! -e pypy2.7-v7.3.9-linux64 ];then
+    wget https://downloads.python.org/pypy/pypy2.7-v7.3.9-linux64.tar.bz2
+    tar xf pypy2.7-v7.3.9-linux64.tar.bz2
+fi
 export PATH=$PATH:$(pwd)/pypy2.7-v7.3.9-linux64/bin
 pypy -m ensurepip
 
